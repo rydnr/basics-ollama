@@ -1,0 +1,14 @@
+#+title: Notes
+
+
+#+begin_src nix
+let
+  targetOutPath = "/nix/store/jd7r3v0yb7p7jkrfqxj2b1ad312hnh7w-python3.10-torch-2.0.1";
+  checkOutPath = pkg:
+    if pkg.name == "sqlalchemy-imageattach" then false
+    else if pkg.outPath == targetOutPath
+      then true
+      else false;
+in
+  lib.filterAttrs (name: pkg: checkOutPath pkg) pkgs.python310.pkgs
+#+end_src
